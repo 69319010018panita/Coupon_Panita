@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ระบบจัดการคูปองและส่วนลด</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="loginView" class="login-screen">
+  <form id="loginForm" class="login-card">
+    <div class="login-brand">
+      <span class="brand-mark" aria-hidden="true">%</span>
+      <div>
+        <span class="eyebrow">COUPON MANAGEMENT</span>
+        <h1>ระบบจัดการคูปอง</h1>
+      </div>
+    </div>
+    <div class="login-heading">
+      <h2>ยินดีต้อนรับ</h2>
+      <p class="muted">เข้าสู่ระบบสำหรับผู้ดูแล เพื่อจัดการคูปองและข้อมูลลูกค้า</p>
+    </div>
+    <label>อีเมล
+      <input type="email" id="loginEmail" required autocomplete="email" />
+    </label>
+    <label>รหัสผ่าน
+      <input type="password" id="loginPassword" required autocomplete="current-password" />
+    </label>
+    <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
+    <p id="loginError" class="error-text"></p>
+  </form>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="appView" class="app-shell hidden">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">%</span>
+      <span class="brand-name">ระบบจัดการคูปอง<small>COUPON MANAGEMENT</small></span>
+    </div>
+    <div class="topbar-actions">
+      <label class="theme-picker" title="เปลี่ยนสีพื้นหลัง">
+        <span class="theme-label">สีพื้นหลัง</span>
+        <input type="color" id="backgroundColor" aria-label="เลือกสีพื้นหลัง" />
+      </label>
+      <button id="logoutBtn" class="btn btn-ghost">ออกจากระบบ</button>
+    </div>
+  </header>
+
+  <nav class="tabbar">
+    <button class="tab-btn active" data-tab="coupons"><span aria-hidden="true">◇</span> คูปอง</button>
+    <button class="tab-btn" data-tab="customers"><span aria-hidden="true">♙</span> ลูกค้า</button>
+    <button class="tab-btn" data-tab="redeem"><span aria-hidden="true">✓</span> ใช้คูปอง</button>
+    <button class="tab-btn" data-tab="history"><span aria-hidden="true">◷</span> ประวัติการใช้</button>
+  </nav>
+
+  <main class="content">
+
+    <!-- ---------- COUPONS TAB ---------- -->
+    <section id="tab-coupons" class="tab-panel active">
+      <div class="panel-header">
+        <div class="section-heading">
+          <h2>จัดการคูปอง</h2>
+          <p>สร้าง แก้ไข และติดตามสถานะคูปองทั้งหมด</p>
+        </div>
+        <button class="btn btn-primary" id="newCouponBtn">+ เพิ่มคูปอง</button>
+      </div>
+      <div class="table-toolbar">
+        <label class="search-box">
+          <span class="sr-only">ค้นหาคูปอง</span>
+          <input id="couponSearch" type="search" placeholder="ค้นหาจากรหัสหรือรายละเอียดคูปอง" autocomplete="off" />
+        </label>
+        <span id="couponSearchSummary" class="search-summary" aria-live="polite"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="couponsTable">
+          <thead>
+            <tr>
+              <th>รหัสคูปอง</th><th>ประเภท</th><th>มูลค่า</th><th>เพดาน</th>
+              <th>ยอดซื้อขั้นต่ำ</th><th>วันที่ใช้ได้</th><th>ใช้ไปแล้ว</th><th>สถานะ</th><th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- CUSTOMERS TAB ---------- -->
+    <section id="tab-customers" class="tab-panel">
+      <div class="panel-header">
+        <div class="section-heading">
+          <h2>จัดการลูกค้า</h2>
+          <p>ดูแลข้อมูลลูกค้าที่ใช้สิทธิ์ส่วนลด</p>
+        </div>
+        <button class="btn btn-primary" id="newCustomerBtn">+ เพิ่มลูกค้า</button>
+      </div>
+      <div class="table-toolbar">
+        <label class="search-box">
+          <span class="sr-only">ค้นหาลูกค้า</span>
+          <input id="customerSearch" type="search" placeholder="ค้นหาจากรหัส ชื่อ เบอร์โทร หรืออีเมล" autocomplete="off" />
+        </label>
+        <span id="customerSearchSummary" class="search-summary" aria-live="polite"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="customersTable">
+          <thead><tr><th>รหัสลูกค้า</th><th>ชื่อ</th><th>เบอร์โทร</th><th>อีเมล</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- REDEEM TAB ---------- -->
+    <section id="tab-redeem" class="tab-panel">
+      <div class="section-heading section-heading-spaced">
+        <h2>ตรวจสอบและใช้คูปอง</h2>
+        <p>ตรวจสอบสิทธิ์และคำนวณส่วนลดก่อนยืนยันการใช้งาน</p>
+      </div>
+      <form id="redeemForm" class="form-card">
+        <label>รหัสคูปอง
+          <input type="text" id="redeemCouponCode" required placeholder="เช่น SUMMER50" />
+        </label>
+        <label>รหัสลูกค้า (ไม่บังคับ)
+          <input type="text" id="redeemCustomerCode" placeholder="เช่น C0001" />
+        </label>
+        <label>ยอดซื้อ (บาท)
+          <input type="number" id="redeemAmount" required min="0" step="0.01" />
+        </label>
+        <div class="form-actions">
+          <button type="button" id="previewBtn" class="btn btn-ghost">ตรวจสอบส่วนลด</button>
+          <button type="submit" class="btn btn-primary">ยืนยันใช้คูปอง</button>
+        </div>
+      </form>
+      <div id="redeemResult" class="result-box hidden"></div>
+    </section>
+
+    <!-- ---------- HISTORY TAB ---------- -->
+    <section id="tab-history" class="tab-panel">
+      <div class="panel-header">
+        <div class="section-heading">
+          <h2>ประวัติการใช้คูปอง</h2>
+          <p>รายการใช้สิทธิ์ล่าสุด พร้อมยอดซื้อและส่วนลด</p>
+        </div>
+        <button class="btn btn-ghost" id="refreshHistoryBtn">รีเฟรช</button>
+      </div>
+      <div class="table-wrap">
+        <table id="historyTable">
+          <thead><tr><th>วันที่ใช้</th><th>ยอดซื้อ</th><th>ส่วนลด</th><th>ยอดสุทธิ</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAL (ฟอร์มเพิ่ม/แก้ไข) ===================== -->
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modalTitle">เพิ่มข้อมูล</h3>
+      <button id="modalClose" class="btn btn-ghost btn-icon">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ===================== SUPABASE CONFIG ===================== -->
+<script>
+  window.SUPABASE_URL = "https://gqaaejohqixpcbrwjmso.supabase.co";
+  window.SUPABASE_ANON_KEY = "sb_publishable_ao4Ck47XZgR35RSJzokRUg_yKwdrrcs";
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
