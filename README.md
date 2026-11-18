@@ -1,3 +1,4 @@
+รหัสล็อกอินเพื่อตรวจสอบ email : admin@gmail.com รหัสผ่าน : admin1234
 # ระบบจัดการคูปองและส่วนลด
 
 สถาปัตยกรรม: **Frontend (HTML/CSS/JS) → Supabase Auth + Data API → PostgreSQL**
